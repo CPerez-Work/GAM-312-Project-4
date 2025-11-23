@@ -5,9 +5,10 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Camera/CameraComponent.h"
-#include "Resource_M.h"
-#include "Kismet/GamePlayStatics.h"
-#include "BuildingPart.h"
+#include "Kismet/GameplayStatics.h"       // Correct spelling
+#include "PlayerWidget1.h"                // Must be a UCLASS or UUserWidget subclass
+#include "BuildingPart.h"                 // Must be a UCLASS
+#include "Resource_M.h"                   // Must be a UCLASS or USTRUCT
 #include "GAM312_Char.generated.h"
 
 UCLASS()
@@ -45,7 +46,7 @@ public:
 	UFUNCTION()
 	void FindObject();
 
-	UPROPERTY(VisibleAnywhere);
+	UPROPERTY(VisibleAnywhere)
 	UCameraComponent* PlayerCamComp;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Stats")
@@ -86,6 +87,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<int32> BuildingArray;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPlayerWidget1* playerUI;
 		
 	UFUNCTION(BlueprintCallable)
 	void SetHealth(float amount);
