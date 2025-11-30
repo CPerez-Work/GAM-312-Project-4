@@ -2,115 +2,128 @@
 
 #pragma once
 
+#pragma once
+
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Camera/CameraComponent.h"
-#include "Kismet/GameplayStatics.h"       // Correct spelling
-#include "PlayerWidget1.h"                // Must be a UCLASS or UUserWidget subclass
-#include "BuildingPart.h"                 // Must be a UCLASS
-#include "Resource_M.h"                   // Must be a UCLASS or USTRUCT
+#include "Kismet/GameplayStatics.h"
+#include "PlayerWidget1.h"
+#include "ObjectiveWidget.h"
+#include "BuildingPart.h"
+#include "Resource_M.h"
 #include "GAM312_Char.generated.h"
 
 UCLASS()
 class GAM312_1_API AGAM312_Char : public ACharacter
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
-	// Sets default values for this character's properties
-	AGAM312_Char();
+    // Sets default values for this character's properties
+    AGAM312_Char();
 
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+    // Called when the game starts or when spawned
+    virtual void BeginPlay() override;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+public:
+    // Called every frame
+    virtual void Tick(float DeltaTime) override;
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+    // Called to bind functionality to input
+    virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	UFUNCTION()
-	void MoveForward(float axisValue);
+    UFUNCTION()
+    void MoveForward(float axisValue);
 
-	UFUNCTION()
-	void MoveRight(float axisValue);
+    UFUNCTION()
+    void MoveRight(float axisValue);
 
-	UFUNCTION()
-	void StartJump();
+    UFUNCTION()
+    void StartJump();
 
-	UFUNCTION()
-	void StopJump();
+    UFUNCTION()
+    void StopJump();
 
-	UFUNCTION()
-	void FindObject();
+    UFUNCTION()
+    void FindObject();
 
-	UPROPERTY(VisibleAnywhere)
-	UCameraComponent* PlayerCamComp;
+    UPROPERTY(VisibleAnywhere)
+    UCameraComponent* PlayerCamComp;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Stats")
-	float Health = 100.0f;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Stats")
+    float Health = 100.0f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Stats")
-	float Hunger = 100.0f;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Stats")
+    float Hunger = 100.0f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Stats")
-	float Stamina = 100.0f;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Stats")
+    float Stamina = 100.0f;
 
-	UPROPERTY(EditAnywhere, Category = "Resources")
-	int Wood;
+    UPROPERTY(EditAnywhere, Category = "Resources")
+    int Wood;
 
-	UPROPERTY(EditAnywhere, Category = "Resources")
-	int Stone;
+    UPROPERTY(EditAnywhere, Category = "Resources")
+    int Stone;
 
-	UPROPERTY(EditAnywhere, Category = "Resources")
-	int Berry;
+    UPROPERTY(EditAnywhere, Category = "Resources")
+    int Berry;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Resources")
-	TArray<int>ResourcesArray;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Resources")
+    TArray<int> ResourcesArray;
 
-	UPROPERTY(EditAnywhere, Category = "Resources")
-	TArray<FString> ResourcesNameArray;
+    UPROPERTY(EditAnywhere, Category = "Resources")
+    TArray<FString> ResourcesNameArray;
 
-	UPROPERTY(EditAnywhere, Category = "HitMarker")
-	UMaterialInterface* hitDecal;
+    UPROPERTY(EditAnywhere, Category = "HitMarker")
+    UMaterialInterface* hitDecal;
 
-	UPROPERTY()
-	bool isBuilding;
+    UPROPERTY(VisibleAnywhere)
+    bool isBuilding;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadwrite)
-	TSubclassOf<ABuildingPart> BuildPartClass;
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+    TSubclassOf<ABuildingPart> BuildPartClass;
 
-	UPROPERTY()
-	ABuildingPart* spawnedPart;
+    UPROPERTY(VisibleAnywhere)
+    ABuildingPart* spawnedPart;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TArray<int32> BuildingArray;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    TArray<int32> BuildingArray;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UPlayerWidget1* playerUI;
-		
-	UFUNCTION(BlueprintCallable)
-	void SetHealth(float amount);
+    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    UPlayerWidget1* playerUI;
 
-	UFUNCTION(BlueprintCallable)
-	void SetHunger(float amount);
+    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    UObjectiveWidget* objWidget;
 
-	UFUNCTION(BlueprintCallable)
-	void SetStamina(float amount);
+    UPROPERTY()
+    float objectsBuilt;
 
-	UFUNCTION()
-	void DecreaseStats();
+    UPROPERTY()
+    float matsCollected;
 
-	UFUNCTION()
-	void GiveResource(float amount, FString resourceType);
+    UFUNCTION(BlueprintCallable)
+    void SetHealth(float amount);
 
-	UFUNCTION(BlueprintCallable)
-	void UpdateResources(float woodAmount, float stoneAmount, FString buildingObject);
+    UFUNCTION(BlueprintCallable)
+    void SetHunger(float amount);
 
-	UFUNCTION(BlueprintCallable)
-	void SpawnBuilding(int buildingID, bool& isSuccess);
+    UFUNCTION(BlueprintCallable)
+    void SetStamina(float amount);
 
-	void RotateBuilding();
+    UFUNCTION()
+    void DecreaseStats();
+
+    UFUNCTION()
+    void GiveResource(float amount, FString resourceType);
+
+    UFUNCTION(BlueprintCallable)
+    void UpdateResources(float woodAmount, float stoneAmount, FString buildingObject);
+
+    UFUNCTION(BlueprintCallable)
+    void SpawnBuilding(int buildingID, bool& isSuccess);
+
+    void RotateBuilding();
 };
+
